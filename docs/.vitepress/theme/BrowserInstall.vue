@@ -28,23 +28,27 @@ onBeforeUnmount(() => {
     <div class="bv-install-actions">
       <a
         class="bv-button bv-primary"
-        href="https://chromewebstore.google.com/detail/djnlaiohfaaifbibleebjggkghlmcpcj"
-        target="_blank"
-        rel="noopener noreferrer"
+        :href="withBase((en ? '/en' : '') + '/start')"
       >
-        <BrowserGlyph browser="Chrome" />{{ en ? 'Add to Chrome' : '安装到 Chrome' }}
+        {{ en ? 'Start here' : '开始安装' }} <span aria-hidden="true">→</span>
       </a>
       <details ref="menu" class="bv-browser-menu">
         <summary class="bv-button bv-secondary">
           <span class="bv-browser-pair"
             ><BrowserGlyph browser="Edge" /><BrowserGlyph browser="Firefox"
           /></span>
-          {{ en ? 'Other browsers' : '其他浏览器' }}
+          {{ en ? 'Store links' : '直接去商店' }}
           <svg class="bv-menu-chevron" viewBox="0 0 16 16" aria-hidden="true">
             <path d="m4 6 4 4 4-4" />
           </svg>
         </summary>
         <div class="bv-browser-options">
+          <a
+            href="https://chromewebstore.google.com/detail/djnlaiohfaaifbibleebjggkghlmcpcj"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><BrowserGlyph browser="Chrome" /><span>Chrome</span><span aria-hidden="true">↗</span></a
+          >
           <a
             href="https://microsoftedge.microsoft.com/addons/detail/kakgmllfpjldjhcnkghpplmlbnmcoflp"
             target="_blank"
@@ -72,6 +76,7 @@ onBeforeUnmount(() => {
         >{{ en ? 'Documentation' : '使用文档' }}</a
       >
     </div>
+    <p class="fr-install-start">{{ en ? 'New to extensions? We’ll walk you through it.' : '第一次装插件也没关系，跟着向导一步一步来。' }}</p>
     <div class="bv-install-fallbacks">
       <span>{{ en ? 'Can’t open the Chrome Web Store?' : 'Chrome 商店打不开？' }}</span>
       <div class="bv-install-fallback-links">
@@ -95,3 +100,7 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.fr-install-start { margin: 12px 0; font-size: 13px; color: var(--vp-c-text-2); }
+</style>

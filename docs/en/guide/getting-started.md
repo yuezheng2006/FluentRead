@@ -4,6 +4,8 @@ Install FluentRead, choose a target language, and read translations alongside th
 
 ## Install
 
+**New to browser extensions?** Follow the [installation guide](/en/start) to choose your browser, find the icon, and translate a [practice page](/en/guide/translation-playground).
+
 Use your browser’s extension store:
 
 <BrowserInstall en />

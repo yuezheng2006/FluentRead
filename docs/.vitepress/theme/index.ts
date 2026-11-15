@@ -9,6 +9,7 @@ import GuideVisual from './GuideVisual.vue'
 import BrandReader from './BrandReader.vue'
 import GuideLayout from './GuideLayout.vue'
 import BrowserInstall from './BrowserInstall.vue'
+import InstallGuide from './InstallGuide.vue'
 import './custom.css'
 import './homepage.css'
 
@@ -24,5 +25,6 @@ export default {
     app.component('GuideVisual', GuideVisual)
     app.component('BrandReader', BrandReader)
     app.component('BrowserInstall', BrowserInstall)
+    app.component('InstallGuide', InstallGuide)
   },
 } satisfies Theme

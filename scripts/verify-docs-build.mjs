@@ -148,6 +148,23 @@ for (const file of files(path.join(root, 'docs/guide'))
 }
 for (const prefix of ['', '/en']) {
   const home = docs.get(resolve(prefix + '/'))
+  assert.equal(
+    home.querySelector('.bv-hero .bv-install-actions > a.bv-primary')?.getAttribute('href'),
+    `${prefix}/start`,
+    'Primary installation action must lead to the localized beginner guide'
+  )
+  const installation = docs.get(resolve(prefix + '/start'))
+  assert(installation, 'Localized installation walkthrough must be built')
+  assert.equal(installation.querySelectorAll('.fr-install-progress button').length, 3)
+  assert.equal(installation.querySelectorAll('.fr-install-progress [aria-current="step"]').length, 1)
+  assert(installation.querySelector('label[for="fr-install-browser"]'))
+  assert.equal(installation.querySelectorAll('#fr-install-browser option').length, 6)
+  const installStore = installation.querySelector('.fr-install-task a.fr-install-primary')
+  assert.equal(installStore?.getAttribute('target'), '_blank')
+  assert(installStore?.getAttribute('rel')?.includes('noopener'))
+  const playground = docs.get(resolve(prefix + '/guide/translation-playground'))
+  assert(playground?.querySelector('.vp-doc')?.textContent.includes('Read at your own pace'))
+  assert(playground?.querySelector(`a[href="${prefix}/start"]`), 'Practice page must link back to the guide')
   assert(
     home.querySelector('.bv-home-brand img[src="/brand-icon.webp"]'),
     'Primary brand icon missing'
@@ -208,8 +225,8 @@ for (const prefix of ['', '/en']) {
   }
   assert.equal(
     home.querySelectorAll('.bv-browser-options a').length,
-    3,
-    'Other browser installation options missing'
+    4,
+    'Direct Chrome, Edge, Firefox and other-platform installation options missing'
   )
   assert(
     [...home.querySelectorAll('[data-visual],[data-demo]')].every(

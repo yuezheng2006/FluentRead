@@ -12,6 +12,7 @@ const guide = (en = false): DefaultTheme.SidebarItem[] => {
       text: en ? 'Start here' : '快速开始',
       items: [
         item('文档首页', 'Documentation', '/docs/'),
+        item('新手安装向导', 'Installation walkthrough', '/start'),
         item('快速开始', 'Quick start', '/guide/getting-started'),
         item('离线下载与安装', 'Offline download & installation', '/guide/offline-install'),
         item('功能概览', 'Feature overview', '/guide/features'),
@@ -109,7 +110,7 @@ const theme = (en = false): DefaultTheme.Config => ({
     { text: en ? 'Help' : '帮助', link: en ? '/en/guide/faq' : '/guide/faq' },
     {
       text: en ? 'Install' : '安装',
-      link: en ? '/en/guide/getting-started#install' : '/guide/getting-started#安装',
+      link: en ? '/en/start' : '/start',
     },
   ],
   sidebar: en
