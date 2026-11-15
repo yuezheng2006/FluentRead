@@ -74,5 +74,15 @@
   "diagnostics.ui.service-action": "检查服务",
   "diagnostics.ui.site-action": "检查范围",
   "diagnostics.ui.close-details": "收起详情",
-  "diagnostics.ui.dismiss-notice": "忽略提示"
+  "diagnostics.ui.dismiss-notice": "忽略提示",
+  "popup.beginner.title": "第一次用？从这里开始",
+  "popup.beginner.firstPage": "先选目标语言，再点上方“翻译”。原文会保留，想恢复时点“还原”。",
+  "popup.beginner.paused": "扩展已暂停。先打开右上角开关，再选择任务。",
+  "popup.beginner.free": "不想填写密钥？打开翻译服务，选择“{service}”。",
+  "popup.beginner.selection": "只翻译一个词或句子",
+  "popup.beginner.image": "翻译图片里的文字",
+  "popup.beginner.document": "翻译 PDF / Word 文件",
+  "popup.beginner.noChange": "没有出现译文？",
+  "popup.beginner.refresh": "安装或更新后先刷新网页；浏览器设置页和扩展商店不能翻译。",
+  "popup.beginner.data": "在线翻译会把待翻译内容发送给你选择的服务。"
 }

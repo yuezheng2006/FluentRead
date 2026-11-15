@@ -168,6 +168,18 @@ describe('actual self help notice', () => {
     triggerRect = {top: 570, bottom: 594};await f.dispatchWindow('resize');f.collapsed();expect(f.listenerCounts()).toEqual({document: 0, window: 0});
   });
 
+  it('prominent popup recovery exposes the localized failure before opening details and follows language changes', async () => {
+    const f = await mount({code: 'timeout'}, {prominent: true});
+    expect(f.trigger().children.some(child => String(child.props.class).includes('diagnostic-visible-summary'))).toBe(true);
+    expect(contents(f.trigger())).toContain(i18n.translate('diagnostics.timeout.summary', 'zh-CN'));
+    f.collapsed();
+    await f.click('查看详情');expect(f.trigger().props['aria-expanded']).toBe(true);
+    expect(f.button('重试')).toBeDefined();
+    f.props.language = 'en-US';await settle();
+    expect(contents(f.trigger())).toContain('Translation timed out');
+    expect(contents(f.trigger())).not.toContain(i18n.translate('diagnostics.timeout.summary', 'zh-CN'));
+  });
+
   it('shows safe fixed recovery text and generates no report or download before explicit actions', async () => {
     const create = vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:fixture');
     const revoke = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => undefined);

@@ -74,5 +74,15 @@
   "diagnostics.ui.service-action": "서비스 확인",
   "diagnostics.ui.site-action": "범위 확인",
   "diagnostics.ui.close-details": "세부 정보 닫기",
-  "diagnostics.ui.dismiss-notice": "알림 숨기기"
+  "diagnostics.ui.dismiss-notice": "알림 숨기기",
+  "popup.beginner.title": "처음이신가요? 여기서 시작하세요",
+  "popup.beginner.firstPage": "대상 언어를 선택하고 위의 번역을 누르세요. 원문은 유지되며 복원을 누르면 돌아갈 수 있습니다.",
+  "popup.beginner.paused": "일시 중지 상태입니다. 작업을 선택하기 전에 오른쪽 위 스위치를 켜세요.",
+  "popup.beginner.free": "API 키가 없다면 번역 서비스에서 “{service}”를 선택하세요.",
+  "popup.beginner.selection": "단어나 문장만 번역",
+  "popup.beginner.image": "이미지 속 글자 번역",
+  "popup.beginner.document": "PDF / Word 파일 번역",
+  "popup.beginner.noChange": "번역이 나타나지 않나요?",
+  "popup.beginner.refresh": "설치하거나 업데이트한 뒤에는 페이지를 새로고침하세요. 브라우저 설정과 확장 스토어는 번역할 수 없습니다.",
+  "popup.beginner.data": "온라인 번역은 번역할 텍스트를 선택한 서비스로 전송합니다."
 }

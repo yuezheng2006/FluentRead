@@ -74,5 +74,15 @@
   "diagnostics.ui.service-action": "Проверить сервис",
   "diagnostics.ui.site-action": "Проверить область",
   "diagnostics.ui.close-details": "Закрыть подробности",
-  "diagnostics.ui.dismiss-notice": "Скрыть уведомление"
+  "diagnostics.ui.dismiss-notice": "Скрыть уведомление",
+  "popup.beginner.title": "Впервые здесь? Начните с этого",
+  "popup.beginner.firstPage": "Выберите язык перевода и нажмите «Перевести» выше. Оригинал остаётся доступным; нажмите «Восстановить», чтобы вернуться к нему.",
+  "popup.beginner.paused": "FluentRead приостановлен. Включите переключатель справа вверху перед выбором задачи.",
+  "popup.beginner.free": "Нет API-ключа? Откройте службы перевода и выберите «{service}».",
+  "popup.beginner.selection": "Перевести слово или предложение",
+  "popup.beginner.image": "Перевести текст на изображении",
+  "popup.beginner.document": "Перевести файл PDF / Word",
+  "popup.beginner.noChange": "Перевод не появился?",
+  "popup.beginner.refresh": "Обновите страницу после установки или обновления расширения. Настройки браузера и магазины расширений перевести нельзя.",
+  "popup.beginner.data": "При онлайн-переводе текст отправляется выбранной службе."
 }

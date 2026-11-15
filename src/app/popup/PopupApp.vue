@@ -4,6 +4,7 @@
  文件职责：实现浏览器 Popup 的主交互界面，连接当前标签页状态、翻译配置、可插拔皮肤、功能抽屉和高频操作，让现场开关与显示操作保持简短，将长期偏好引导到对应设置页，并为从划词抽屉打开的设置保留明确返回原网页的入口。
  主要内容：Aa 按钮通过既有配置补丁保存全局译文字体偏好，以固定尺寸的衬线／无衬线图标、按下状态和紧凑操作提示反馈选择；保存失败时在翻译卡片内显示居中提示与重试按钮，重试时将焦点交回字体按钮；已有配置订阅同步其他页面的选择，导航不撤销已接受保存，关闭与失活只取消界面等待和迟到反馈；翻译卡片右下角的双语/仅译文图标与网站规则同行，两种按钮共用提示样式并支持 Escape 收起，模式回调随服务和操作变化失效；品牌官网入口保留稳定点击区域，内部图标在悬停和键盘聚焦时缓慢单次摇摆并遵循动画偏好，停留后显示可用 Escape 关闭的官网提示；全文翻译进度与完成状态由主按钮反馈，失败时在主操作内的预留区域呈现自助诊断入口，不挤动网站开关，配置修复定位当前服务，本地报告由用户预览并手动导出；在配置 hydration 后汇总翻译服务，直接展示网页默认服务与适用的配置模型；翻译与局部同排，主操作用短标题合并平台快捷键并保留加载状态，长组合在悬停提示中完整显示，站点开关保留独立按钮；赞赏码在当前弹窗内切换放大与还原，关闭后重置；悬停、划词与图片抽屉优先展示开关和操作示意，首次单屏语言选择独占内容，保存后立即显示主菜单；页面操作、抽屉和导航绑定活跃会话，等待期间独占请求，关闭和配置切换使旧回复失效；网站规则写前复验标签页，等待后台确认并呈现保存忙碌、暂停与失败反馈；Safari 免费池精确授权，焦点复查保留已就绪按钮，点击接管旧读取并重新确认实际许可，撤权取消待发操作，授权事件合并刷新，错误随语言资源更新；打开的实际 teleport 抽屉复用平台可见视口订阅跟随键盘与缩放，极矮区域由同一订阅派生紧凑布局，整页遮罩保持背景拦截，可见高度扩大时仅修正当前聚焦服务搜索被吸顶标题遮住的外框，关闭、缓存失活和卸载立即释放，根画布保持固有尺寸。
  信息层级：服务摘要只保留当前服务与模型；悬停和划词的快捷开关与标题同排，独立快捷方案的作用范围仍明确说明，圈选快捷键只在操作示意中展示。
+ 新手自助：翻译卡片内按需展开入门步骤、免密钥服务说明及任务入口，复用既有功能可见性和会话动作；故障摘要在主操作下方以可读按钮展示，展开后仍使用原诊断与恢复协议。
  缓存清理：每次清理拥有独立的可取消等待，失活或卸载释放旧等待，超时恢复按钮并提示结果未确认，后台确认清除但页面仍同步时展示中性状态；全局暂停不取消清理，旧回复不能覆盖新请求。
  顶部入口：赞赏使用带提示的咖啡图标；支持的浏览器在其右侧提供带悬停和键盘提示的侧边栏图标，按配置从当前标签页或窗口打开 Chromium 面板，Firefox 直接使用原生侧栏；保留打开所需的用户手势，成功后关闭弹窗，失败保留重试入口。
  模块边界：组件编排 UI、浏览器导航事件与生命周期；页内面板通过授权来源固定发起网页，页面消息归属由 pageActions 管理，不实现翻译 provider、缓存存储或 content 挂载；公共配置由 services/config 管理；配置草稿复用共享编辑会话，保留 post 合并和关闭补丁交接。
@@ -177,8 +178,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V5.5A1.5 1.5 0 0 1 5.5 4H9M15 4h3.5A1.5 1.5 0 0 1 20 5.5V9M20 15v3.5a1.5 1.5 0 0 1-1.5 1.5H15M9 20H5.5A1.5 1.5 0 0 1 4 18.5V15M10 10l7 2.6-3 1.1-1.1 3z" /></svg>
           <span>{{ t('popup.sectionTranslation') }}</span>
         </button>
-        <DiagnosticNotice v-if="pageDiagnostic" :diagnostic="pageDiagnostic" :language="config.uiLanguage" :busy="translating" :version="version" @action="diagnosticAction" />
       </div>
+      <DiagnosticNotice v-if="pageDiagnostic" prominent :diagnostic="pageDiagnostic" :language="config.uiLanguage" :busy="translating" :version="version" @action="diagnosticAction" />
 
       <div class="translation-meta">
         <PopupSiteRule
@@ -236,6 +237,21 @@
       </div>
 
       <p v-if="notice" class="notice" :class="noticeType" :role="noticeType === 'error' ? 'alert' : 'status'" :aria-live="noticeType === 'error' ? 'assertive' : 'polite'">{{ notice }}</p>
+      <details class="beginner-guide" data-testid="beginner-guide" data-i18n-ignore>
+        <summary>{{ t('popup.beginner.title') }}</summary>
+        <p>{{ t('popup.beginner.firstPage') }}</p>
+        <p v-if="!config.on" class="beginner-paused" role="status">{{ t('popup.beginner.paused') }}</p>
+        <p>{{ t('popup.beginner.free', {service: providerLabel(services.freeTranslation)}) }}</p>
+        <button type="button" data-beginner-task="services" :onClick="popupActions.services">{{ t('popup.providers.title') }} →</button>
+        <div v-if="config.interfaceVisibility.popupQuickFeatures" class="beginner-tasks">
+          <button v-if="visiblePopupQuickFeatureIds.includes('selection')" type="button" data-beginner-task="selection" :disabled="!config.on" :onClick="popupQuickFeatureViewModels.selection.open">{{ t('popup.beginner.selection') }} →</button>
+          <button v-if="visiblePopupQuickFeatureIds.includes('image') && (browserCapabilities.imageTranslation || browserCapabilities.areaTranslation)" type="button" data-beginner-task="image" :disabled="!config.on" :onClick="popupQuickFeatureViewModels.image.open">{{ t('popup.beginner.image') }} →</button>
+          <button v-if="visiblePopupQuickFeatureIds.includes('document')" type="button" data-beginner-task="document" :disabled="!config.on" :onClick="popupQuickFeatureViewModels.document.open">{{ t('popup.beginner.document') }} →</button>
+        </div>
+        <strong>{{ t('popup.beginner.noChange') }}</strong>
+        <p>{{ t('popup.beginner.refresh') }}</p>
+        <p class="beginner-data-note">{{ t('popup.beginner.data') }}</p>
+      </details>
     </section>
 
     <PopupSiteRule
