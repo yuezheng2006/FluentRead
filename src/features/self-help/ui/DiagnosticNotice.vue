@@ -1,13 +1,15 @@
 <!--
  * @file src/features/self-help/ui/DiagnosticNotice.vue
  * 文件职责：在翻译操作下方以小状态入口展示故障，按需打开不占布局空间的恢复浮层。
- * 主要内容：默认仅挂载状态图标与无障碍摘要；浮层按可用空间定位，展开后才挂载解释、恢复和报告入口，Escape 返回焦点、外部操作自然收起；限制冷却期重试，切换与卸载清理资源；保留按需语言包加载代次，隐藏摘要/入口标签与已打开浮层都随有效包到达刷新，语言迟到后重新计算可用空间。
+ * 主要内容：默认仅挂载状态图标与无障碍摘要，prominent 模式提供可见的本地化故障摘要和详情按钮；浮层按可用空间定位，展开后才挂载解释、恢复和报告入口，Escape 返回焦点、外部操作自然收起；限制冷却期重试，切换与卸载清理资源；保留按需语言包加载代次，隐藏摘要/入口标签与已打开浮层都随有效包到达刷新，语言迟到后重新计算可用空间。
  * 模块边界：不请求翻译、不修改服务或配置、不收集正文和 URL；重试与导航交给调用 feature，报告生成使用纯诊断服务。
 -->
 <template>
-  <section v-if="safe" ref="host" class="fluentread-diagnostic" :data-diagnostic-code="safe.code" data-i18n-ignore @keydown.esc="closeDetails">
+  <section v-if="safe" ref="host" class="fluentread-diagnostic" :class="{'diagnostic-prominent': prominent}" :data-diagnostic-code="safe.code" data-i18n-ignore @keydown.esc="closeDetails">
     <button ref="detailsToggle" class="diagnostic-trigger" data-diagnostic-details-toggle type="button" :aria-label="`${text(`diagnostics.${safe.code}.summary`)} · ${text('diagnostics.ui.details')}`" :title="text(`diagnostics.${safe.code}.summary`)" aria-haspopup="dialog" :aria-expanded="expanded" :aria-controls="detailsId" @click="toggleDetails">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 5.5v5M10 13v1"/></svg>
+      <span v-if="prominent" class="diagnostic-visible-summary">{{ text(`diagnostics.${safe.code}.summary`) }}</span>
+      <span v-if="prominent" class="diagnostic-visible-action">{{ text('diagnostics.ui.details') }} →</span>
     </button>
     <span class="diagnostic-sr-only" data-diagnostic-summary role="status" aria-live="polite">{{ text(`diagnostics.${safe.code}.summary`) }}</span>
     <div v-if="expanded" :id="detailsId" ref="panel" class="diagnostic-details" :class="placement" :style="{maxHeight: `${maxHeight}px`}" data-diagnostic-details role="dialog" :aria-labelledby="`${detailsId}-title`" :aria-describedby="`${detailsId}-description`">
@@ -38,7 +40,7 @@ import {computed, nextTick, onBeforeUnmount, ref, useId, watch} from 'vue';
 import {buildDiagnosticReport, normalizeDiagnostic, type DiagnosticAction} from '@/src/services/diagnostics';
 import {resolveUiLanguageFromLocale, translate, type TranslationParams} from '@/src/core/i18n';
 import {ensureUiLanguageBundle} from '@/src/platform/i18n/uiLanguageBundles';
-const props = withDefaults(defineProps<{diagnostic: unknown; language?: string; busy?: boolean; version?: string; feature?: 'popup' | 'services'}>(), {language: 'zh-CN', busy: false, feature: 'popup'});
+const props = withDefaults(defineProps<{diagnostic: unknown; language?: string; busy?: boolean; prominent?: boolean; version?: string; feature?: 'popup' | 'services'}>(), {language: 'zh-CN', busy: false, prominent: false, feature: 'popup'});
 const emit = defineEmits<{action: [action: DiagnosticAction]}>();
 const safe = computed(() => normalizeDiagnostic(props.diagnostic));
 const displayLanguage = computed(() => resolveUiLanguageFromLocale(props.language));
@@ -170,4 +172,10 @@ onBeforeUnmount(() => {stopWatching();clearTimer();for (const [url, release] of 
 html[data-fluentread-android-popup] .fluentread-diagnostic { flex-basis: 44px; width: 44px; height: 44px; }
 html[data-fluentread-android-popup] .fluentread-diagnostic button { min-width: 44px; min-height: 44px; padding: 6px 4px; }
 html[data-fluentread-android-popup] .fluentread-diagnostic .diagnostic-trigger, html[data-fluentread-android-popup] .fluentread-diagnostic .diagnostic-close { flex-basis: 44px; width: 44px; height: 44px; padding: 0; }
+.fluentread-diagnostic.diagnostic-prominent { width: 100%; height: auto; margin: 10px 0 0; }
+.fluentread-diagnostic.diagnostic-prominent .diagnostic-trigger { display: flex; align-items: center; gap: 6px; width: 100%; height: auto; min-height: 36px; padding: 7px 8px; text-align: start; color: var(--ink); background: var(--surface-soft); border: 1px solid var(--line); }
+.diagnostic-prominent .diagnostic-trigger svg { flex: none; }
+.diagnostic-visible-summary { flex: 1; min-width: 0; }
+.diagnostic-visible-action { flex: none; color: var(--brand-strong); }
+.diagnostic-prominent .diagnostic-details { width: min(100%, 310px); }
 </style>

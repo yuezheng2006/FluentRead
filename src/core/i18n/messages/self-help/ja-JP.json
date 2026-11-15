@@ -74,5 +74,15 @@
   "diagnostics.ui.service-action": "サービスを確認",
   "diagnostics.ui.site-action": "範囲を確認",
   "diagnostics.ui.close-details": "詳細を閉じる",
-  "diagnostics.ui.dismiss-notice": "通知を非表示"
+  "diagnostics.ui.dismiss-notice": "通知を非表示",
+  "popup.beginner.title": "初めてですか？ここから開始",
+  "popup.beginner.firstPage": "翻訳先の言語を選び、上の「翻訳」を押します。原文は残ります。「元に戻す」で原文に戻せます。",
+  "popup.beginner.paused": "一時停止中です。右上のスイッチをオンにしてから操作してください。",
+  "popup.beginner.free": "APIキーがない場合は、翻訳サービスで「{service}」を選んでください。",
+  "popup.beginner.selection": "単語や文だけを翻訳",
+  "popup.beginner.image": "画像内の文字を翻訳",
+  "popup.beginner.document": "PDF / Wordファイルを翻訳",
+  "popup.beginner.noChange": "訳文が表示されませんか？",
+  "popup.beginner.refresh": "インストールや更新の後はページを再読み込みしてください。ブラウザー設定や拡張機能ストアは翻訳できません。",
+  "popup.beginner.data": "オンライン翻訳では、翻訳するテキストが選択したサービスに送信されます。"
 }

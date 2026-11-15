@@ -74,5 +74,15 @@
   "diagnostics.ui.service-action": "Check service",
   "diagnostics.ui.site-action": "Check scope",
   "diagnostics.ui.close-details": "Close details",
-  "diagnostics.ui.dismiss-notice": "Dismiss notice"
+  "diagnostics.ui.dismiss-notice": "Dismiss notice",
+  "popup.beginner.title": "New here? Start with this",
+  "popup.beginner.firstPage": "Choose a target language, then click Translate above. The original stays available; click Restore to return to it.",
+  "popup.beginner.paused": "FluentRead is paused. Turn on the top-right switch before choosing a task.",
+  "popup.beginner.free": "No API key? Open Translation services and choose “{service}”.",
+  "popup.beginner.selection": "Translate a word or sentence",
+  "popup.beginner.image": "Translate text in an image",
+  "popup.beginner.document": "Translate a PDF / Word file",
+  "popup.beginner.noChange": "No translation appeared?",
+  "popup.beginner.refresh": "Refresh the page after installing or updating. Browser settings and extension stores cannot be translated.",
+  "popup.beginner.data": "Online translation sends the text to your selected service."
 }

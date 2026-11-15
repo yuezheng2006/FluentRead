@@ -74,5 +74,15 @@
   "diagnostics.ui.service-action": "Vérifier le service",
   "diagnostics.ui.site-action": "Vérifier la zone",
   "diagnostics.ui.close-details": "Fermer les détails",
-  "diagnostics.ui.dismiss-notice": "Ignorer l’alerte"
+  "diagnostics.ui.dismiss-notice": "Ignorer l’alerte",
+  "popup.beginner.title": "Première visite ? Commencez ici",
+  "popup.beginner.firstPage": "Choisissez une langue cible, puis cliquez sur Traduire ci-dessus. Le texte original reste disponible ; cliquez sur Restaurer pour le retrouver.",
+  "popup.beginner.paused": "FluentRead est en pause. Activez le bouton en haut à droite avant de choisir une tâche.",
+  "popup.beginner.free": "Pas de clé API ? Ouvrez les services de traduction et choisissez « {service} ».",
+  "popup.beginner.selection": "Traduire un mot ou une phrase",
+  "popup.beginner.image": "Traduire le texte d’une image",
+  "popup.beginner.document": "Traduire un fichier PDF / Word",
+  "popup.beginner.noChange": "Aucune traduction affichée ?",
+  "popup.beginner.refresh": "Actualisez la page après l’installation ou une mise à jour. Les paramètres du navigateur et les boutiques d’extensions ne peuvent pas être traduits.",
+  "popup.beginner.data": "La traduction en ligne envoie le texte au service choisi."
 }

@@ -118,6 +118,38 @@ async function mount(plugin?: Plugin) {
 }
 
 describe('Popup 首页关键信息', () => {
+  it.each([['zh-CN', '第一次用？从这里开始'], ['en-US', 'New here? Start with this']] as const)('%s 新手帮助可发现且不改配置，任务复用既有抽屉', async (locale, title) => {
+    language.value = locale;
+    const before = JSON.stringify(config);
+    await mount();
+    const guide = document.querySelector<HTMLDetailsElement>('[data-testid="beginner-guide"]')!;
+    expect(guide.querySelector('summary')?.textContent).toBe(title);
+    expect(guide.hasAttribute('open')).toBe(false);
+    expect(guide.textContent).toContain(translate('popup.beginner.data', locale));
+    expect(guide.textContent).not.toContain('popup.beginner.');
+    expect(guide.querySelectorAll('[data-beginner-task]')).toHaveLength(4);
+    expect(JSON.stringify(config)).toBe(before);
+    expect(patches).not.toHaveBeenCalled();
+    guide.querySelector<HTMLButtonElement>('[data-beginner-task="selection"]')!.click();await settle();
+    expect(document.querySelector('[data-testid="selection-enable"]')).not.toBeNull();
+    expect(JSON.stringify(config)).toBe(before);expect(patches).not.toHaveBeenCalled();
+  });
+
+  it('暂停时说明下一步并禁止启动任务；隐藏快捷功能不从帮助重新暴露', async () => {
+    config.on = false;await mount();
+    expect(document.querySelector('.beginner-paused')?.textContent).toContain('扩展已暂停');
+    expect([...document.querySelectorAll<HTMLButtonElement>('.beginner-tasks button')].every(button => button.hasAttribute('disabled'))).toBe(true);
+    const service = document.querySelector<HTMLButtonElement>('[data-beginner-task="services"]')!;
+    expect(service.hasAttribute('disabled')).toBe(false);
+    service.click();await settle();
+    for (let attempt = 0; attempt < 50 && !document.querySelector('.service-panel-close'); attempt++) {
+      await new Promise(resolve => setTimeout(resolve, 0));await settle();
+    }
+    expect(document.querySelector('.service-panel-close')).not.toBeNull();
+    publish(next => {next.interfaceVisibility.popupQuickFeatures = false;});await settle();
+    expect(document.querySelector('.beginner-tasks')).toBeNull();
+  });
+
   it('无论是否已有翻译记录，首页都不占用一行展示首次提示', async () => {
     config.count = 0;const before = {service: config.service, from: config.from, to: config.to, model: config.model.openai};
     await mount();expect(document.querySelector('[data-testid="first-translation-hint"]')).toBeNull();

@@ -37,6 +37,8 @@ Other browsers may place the pin control elsewhere in their extension menu.
 
 The **interface language** controls buttons and settings. The **target language** controls translations. Free translation works without an API key.
 
+The quick panel also includes **New here? Start with this**: expand it for first-page instructions, API-key-free service guidance, and word/sentence, image, or PDF/Word tasks. Opening help does not change your settings. If paused, enable the top-right switch first. Translation failures show a readable summary below the main button; choose **View details** for recovery actions. Online translation sends the text to your selected service.
+
 <span id="translate-selected-text"></span>
 
 ## Selection translation
